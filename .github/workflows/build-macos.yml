@@ -25,7 +25,7 @@ jobs:
 
       - name: Build with PyInstaller
         run: |
-          python -m PyInstaller --onefile --windowed --icon=app.icns --name "Cards List Loader" versions/1.1.0_mac/app.py
+          python -m PyInstaller --onefile --windowed --icon=app.icns --name "Cards List Loader" app.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
