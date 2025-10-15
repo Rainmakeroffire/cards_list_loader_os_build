@@ -13,8 +13,8 @@ def create_main_window():
     root.geometry("1050x685")
     root.resizable(False, False)
 
-    icon = ImageTk.PhotoImage(file="img/favicon-16x16.png")
-    root.iconphoto(False, icon)
+    # icon = ImageTk.PhotoImage(file="img/favicon-16x16.png")
+    # root.iconphoto(False, icon)
 
     # --- Основные колонки ---
     main_frame = tk.Frame(root, bg="", highlightthickness=0)
