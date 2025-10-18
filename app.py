@@ -93,6 +93,11 @@ def run_request(ui):
         messagebox.showerror("Ошибка", str(e))
 
 if __name__ == "__main__":
+    import sys
+    if "--test" in sys.argv:
+        print("OK")
+        sys.exit(0)
+
     ui = create_main_window()
     ui["run_button"].config(command=lambda: run_request(ui))
     ui["root"].mainloop()

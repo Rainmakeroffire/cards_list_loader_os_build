@@ -1,0 +1,53 @@
+name: Test compiled macOS build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'artifacts/**'
+
+jobs:
+  test-compiled:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: List artifacts in repo
+        run: |
+          echo "Files in artifacts/:"
+          ls -la artifacts || true
+
+      - name: Unzip app artifact
+        run: |
+          mkdir -p ./out
+          unzip -q artifacts/Cards-List-Loader-macOS.zip -d ./out
+          echo "Unzipped:"
+          ls -la ./out || true
+
+      - name: Ensure executables are runnable
+        run: |
+          APP_DIR=$(find ./out -maxdepth 2 -type d -name "*.app" | head -n 1)
+          echo "Found APP_DIR: $APP_DIR"
+          BIN="$APP_DIR/Contents/MacOS/Cards List Loader"
+          echo "Binary path: $BIN"
+          chmod +x "$BIN" || true
+
+      - name: Run binary with --test and check output
+        id: run_test
+        run: |
+          APP_DIR=$(find ./out -maxdepth 2 -type d -name "*.app" | head -n 1)
+          BIN="$APP_DIR/Contents/MacOS/Cards List Loader"
+          echo "Running: $BIN --test"
+          set -o pipefail
+          OUTPUT=$("$BIN" --test 2>&1) || true
+          echo "Program output:"
+          echo "$OUTPUT"
+          echo "::set-output name=out::$OUTPUT"
+          if echo "$OUTPUT" | grep -q "^OK$"; then
+            echo "Test succeeded: found OK"
+            exit 0
+          else
+            echo "Test failed: OK not found in output"
+            exit 1
+          fi
