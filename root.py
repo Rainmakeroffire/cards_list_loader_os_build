@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import ImageTk
+# from PIL import ImageTk
 from func import add_context_menu, validate_filename, validate_int_array_input 
 from config_loader import load_settings
 

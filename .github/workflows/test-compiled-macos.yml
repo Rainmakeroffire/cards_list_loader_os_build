@@ -2,9 +2,9 @@ name: Test compiled macOS build
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'artifacts/**'
+#   push:
+#     paths:
+#       - 'artifacts/**'
 
 jobs:
   test-compiled:
